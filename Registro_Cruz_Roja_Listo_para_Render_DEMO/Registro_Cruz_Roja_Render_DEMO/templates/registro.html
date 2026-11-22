@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7f8fc"><title>Registrar turno · Cruz Roja</title>
+<link rel="stylesheet" href="/static/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@2.0.75/build/spline-viewer.js"></script>
+<script defer src="/static/app.js"></script></head>
+<body class="page-register" data-csrf="@@CSRF@@">
+<div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+<header class="topbar"><a class="brand" href="/"><span class="brand-mark"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M3 21h7l4-11 7 18 4-9h8" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>CRUZ ROJA</strong><small>Gestión de personal</small></span></a>
+<div class="topbar-right"><span class="live-indicator"><span class="status-dot"></span> @@SCAN_STATUS@@</span><div class="clock-pill"><span aria-hidden="true">◷</span><span id="clock-header">--:--:--</span></div></div></header>
+<main class="main-grid"><section class="hero-panel" aria-label="Bienvenida al sistema"><div class="hero-badge"><span class="mini-bolt">✳</span> SISTEMA DE ASISTENCIA · 2026</div><div class="hero-title-wrap"><h1>Cada minuto<br><span>cuenta.</span></h1><p>Gracias por estar donde más se necesita. Registrá tu entrada o salida de forma segura, rápida y sin complicaciones.</p></div>
+<div class="mascot-card" id="mascot-card"><div class="mascot-grid"></div><span class="mascot-orbit orbit-a"></span><span class="mascot-orbit orbit-b"></span>
+<div class="mascot-scene" id="mascot-scene"><div class="fallback-robot" aria-hidden="true"><div class="bot-antenna"></div><div class="bot-head"><span class="bot-ear left"></span><span class="bot-ear right"></span><div class="bot-face"><span class="bot-eye"></span><span class="bot-eye"></span></div><span class="bot-cheek left"></span><span class="bot-cheek right"></span></div><div class="bot-body"><span class="bot-heart">♥</span></div><span class="bot-hand hand-left"></span><span class="bot-hand hand-right"></span><span class="bot-foot foot-left"></span><span class="bot-foot foot-right"></span></div>
+<spline-viewer id="mascot-viewer" url="@@SPLINE_URL@@" events-target="local" hint="true" aria-label="Mascota interactiva 3D"></spline-viewer></div>
+<div class="mascot-bubble" id="mascot-bubble" aria-live="polite"><span class="bubble-sparkle">✦</span><span id="mascot-message">¡Hola! Soy Cora, tu asistente de turno.</span></div>
+<span class="mascot-caption">CONOCÉ A CORA <span>·</span> TU COMPAÑERA VIRTUAL</span></div>
+<div class="hero-bottom"><div class="hero-stat"><span class="hero-stat-icon">✧</span><div><strong>Siempre al servicio</strong><small>Un registro que acompaña tu labor.</small></div></div><span class="tiny-check">✓ REGISTRO DIGITAL</span></div></section>
+<section class="form-panel"><div class="form-head"><div class="section-kicker"><span class="kicker-line"></span> CONTROL DE TURNO</div><h2>Registrá tu asistencia<span class="red-period">.</span></h2><p>Completá tus datos para continuar. Detectaremos automáticamente si corresponde tu entrada o tu salida.</p></div>
+<div class="date-ribbon"><div class="date-left"><span class="date-symbol">◷</span><div><small>FECHA Y HORA DE TU CELULAR</small><strong id="datetime-live">Cargando fecha y hora...</strong></div></div><span class="live-tag"><span class="status-dot"></span> EN VIVO</span></div>
+<form id="turno-form" novalidate><div class="form-step"><span>01</span><span>IDENTIFICACIÓN DEL OPERARIO</span></div>
+<div class="field"><label for="codigo">Código de operario <span>*</span></label><div class="input-wrap"><span class="field-symbol">#</span><input id="codigo" name="codigo" type="text" maxlength="25" required autocapitalize="characters" autocomplete="off" placeholder="Ej. CR-001"><span id="lookup-spin" class="lookup-spin" aria-hidden="true"></span></div><div class="field-under">Ingresá tu código asignado por la institución.</div></div>
+<div class="field-pair"><div class="field"><label for="nombre">Nombre <span>*</span></label><div class="input-wrap"><span class="field-symbol">◉</span><input id="nombre" name="nombre" type="text" maxlength="70" autocomplete="given-name" required placeholder="Tu nombre"></div></div><div class="field"><label for="apellido">Apellido <span>*</span></label><div class="input-wrap"><span class="field-symbol">◉</span><input id="apellido" name="apellido" type="text" maxlength="70" autocomplete="family-name" required placeholder="Tu apellido"></div></div></div>
+<div class="status-box" id="status-box" data-status="neutral"><span class="status-icon" id="status-icon">✳</span><span id="status-text">Escribí tu código para detectar tu estado.</span></div>
+<div class="notice-box" id="notice-box" role="alert" hidden></div>
+<button class="submit-btn" id="submit-btn" type="submit" disabled><span class="btn-sheen"></span><span id="submit-icon">↗</span><span id="submit-text">Registrar entrada</span><span class="btn-trailing">→</span></button>
+<div class="privacy-note"><span aria-hidden="true">♧</span> Tu hora se toma automáticamente del dispositivo. También se conserva la hora del servidor para auditoría.</div></form>
+<div id="success-panel" class="success-panel" role="status" hidden><div class="success-symbol">✓</div><div class="success-kicker">REGISTRO COMPLETADO</div><h3 id="success-heading">¡Entrada registrada!</h3><p id="success-message"></p><div class="ticket-meta"><span>HORA DEL CELULAR</span><strong id="success-time"></strong></div><div class="success-rescan"><span>✳</span> Para marcar el siguiente movimiento, volvé a abrir el formulario.</div><a class="return-form-link" href="/">Volver al formulario →</a></div>
+<div class="form-footer"><span>✳ Plataforma de registro de asistencia</span><span>Diseñado para servir</span></div></section></main>
+</body></html>

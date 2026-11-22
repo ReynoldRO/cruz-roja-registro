@@ -1,0 +1,19 @@
+# Blueprint de DEMOSTRACIÓN para Render. No apto para producción institucional.
+services:
+  - type: web
+    name: registro-cruz-roja-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: MODO_PRUEBA
+        value: "0"
+      - key: MODO_DEMO_WEB
+        value: "1"
+      - key: COOKIE_SECURE
+        value: "1"
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: COOKIE_SECRET
+        generateValue: true

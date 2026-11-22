@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panel administrativo · Cruz Roja</title><link rel="stylesheet" href="/static/styles.css"></head>
+<body class="page-admin">
+<header class="topbar admin-topbar"><a href="/admin" class="brand"><span class="brand-mark">♥</span><span><strong>CRUZ ROJA</strong><small>Administración de asistencia</small></span></a><form action="/admin/logout" method="post"><input type="hidden" name="csrf" value="@@CSRF@@"><button class="logout-btn" type="submit">Cerrar sesión ↗</button></form></header>
+<main class="admin-main">
+  <div class="admin-welcome"><div><span class="section-kicker">CENTRO DE CONTROL / ASISTENCIA</span><h1>Panel de registros<span class="red-period">.</span></h1><p>Consultá las marcaciones, todo el personal y las horas trabajadas por mes.</p></div><div class="admin-header-actions"><a class="outline-button" href="#personal">Ver personal</a><a class="outline-button" href="/admin/export.csv">↓ Historial CSV</a></div></div>
+  <div class="admin-metrics">
+    <div class="metric-card"><span>OPERARIOS REGISTRADOS</span><strong>@@TOTAL_PERSONAS@@</strong><small>Personas en la base</small></div>
+    <div class="metric-card"><span>PERSONAL EN TURNO</span><strong>@@PRESENTES@@</strong><small>Sin salida registrada</small></div>
+    <div class="metric-card"><span>MARCACIONES HISTÓRICAS</span><strong>@@TOTAL@@</strong><small>Turnos iniciados</small></div>
+    <div class="metric-card metric-hours"><span>HORAS DEL MES</span><strong>@@TOTAL_HORAS@@</strong><small>Todos los operarios · turnos cerrados</small></div>
+  </div>
+  <section class="monthly-panel" id="personal">
+    <div class="monthly-head"><div><div class="section-kicker">01 / PERSONAL Y HORAS TRABAJADAS</div><h2>Resumen mensual de operarios</h2><p>Horas calculadas con el reloj del servidor, distribuidas según el calendario de Costa Rica (UTC−6). Los turnos sin salida no se suman.</p></div>
+      <form class="month-controls" action="/admin" method="get"><label for="mes">Seleccioná el mes</label><div class="month-control-row"><input type="month" id="mes" name="mes" value="@@MES@@" min="2020-01" max="2099-12" required><button class="small-button" type="submit">Consultar mes</button></div><a class="outline-button export-month" href="/admin/horas.csv?mes=@@MES@@">↓ Descargar horas de @@MES@@</a></form>
+    </div>
+    <div class="person-filter"><label for="buscar-persona">Buscar entre todos los operarios</label><input id="buscar-persona" type="search" placeholder="Buscar por código, nombre o apellido..." autocomplete="off"><span id="person-result-count" aria-live="polite"></span></div>
+    <div class="table-scroller personal-table"><table><thead><tr><th>Código</th><th>Nombre completo</th><th>Estado actual</th><th>Turnos cerrados del mes</th><th>Horas del mes</th><th>Detalle</th></tr></thead><tbody id="person-rows">@@PERSON_ROWS@@</tbody></table><p id="person-filter-empty" hidden>No hay operarios que coincidan con la búsqueda.</p></div>
+  </section>
+  <section class="monthly-panel person-detail" id="detalle-operario"><div class="section-kicker">02 / DESGLOSE INDIVIDUAL</div><div class="person-detail-content">@@PERSON_DETAIL@@</div></section>
+  <div class="admin-panels">
+    <section class="qr-admin-card"><div class="section-kicker">03 / ACCESO DESDE CELULARES</div><h2>Tu código QR</h2><p>Mostralo en el punto de control. Cada escaneo habilita una sola marcación durante 15 minutos. El registro está diseñado para teléfonos.</p><div class="qr-render"><img id="qr-image" alt="Código QR para registrar entrada o salida desde el celular" src="/admin/qr.png?base=@@BASE_URL@@"></div><label for="public-url">Dirección accesible desde los celulares</label><div class="qr-input-row"><input type="url" id="public-url" value="@@BASE_URL@@" spellcheck="false" aria-label="URL pública del servidor"><button type="button" id="qr-update" class="small-button">Actualizar QR</button></div><p class="admin-help">Usá la IP de tu computadora en la red Wi-Fi en lugar de localhost, o un dominio HTTPS público.</p><div class="qr-actions"><a id="download-qr" download="codigo-qr-cruz-roja.png" class="outline-button" href="/admin/qr.png?base=@@BASE_URL@@">↓ Descargar QR</a><button id="copy-url" class="outline-button" type="button">Copiar enlace</button></div></section>
+    <section class="records-card" id="historial"><div class="records-header"><div><div class="section-kicker">04 / TRAZABILIDAD</div><h2>Últimas marcaciones</h2><p>Conserva el historial actual. Muestra la hora del celular y la marca oficial del servidor (UTC).</p></div><span class="records-count">ÚLTIMAS 150</span></div><div class="table-scroller"><table><thead><tr><th>Código</th><th>Operario</th><th>Entrada · celular</th><th>Salida · celular</th><th>Entrada · UTC</th><th>Salida · UTC</th></tr></thead><tbody>@@ROWS@@</tbody></table></div></section>
+  </div><footer class="admin-footer">PROTOTIPO · Los totales mensuales se basan en la hora del servidor y turnos cerrados. No equivalen automáticamente a horas de nómina.</footer>
+</main>
+<script src="/static/admin.js" defer></script>
+</body></html>
